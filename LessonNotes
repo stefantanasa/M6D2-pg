@@ -1,0 +1,95 @@
+# Create new rep
+
+1. initiate project (`npm init - y` )
+2. install express (`npm i express`)
+3. create a file `.gitignore` inside it write `node_modules/`
+4. create a src folder
+5. create a server.js file inside src folder
+6. Add `"type":"module"` in package.json under `"main": "lecture.js"` to be able to use the import express on 7th step
+7. in server.js import `express from 'express'`, `npm i cors`
+8. to execute the server create a variable` server = express()`
+9. Add:
+
+   - `server.listen(3001, () => { console.log("Server is working on the server 3001"); });`
+     to make the server run on port 3001 and execute the second parameter (the function)
+   - `server.on("error", (error)=> { console.log(server stopped: ${error}) }`
+
+10. To run the server write in the terminal node ./src/server.js but... there is an easier way.
+
+To restart the server every time we save we add another package named nodemon.
+
+11. Write in terminal npm i -D nodemon
+12. Add in package.json in scripts "dev":"nodemon -e js ./src/server.js"
+13. `npm i pg ` and `npm dotenv`
+14. Create `.env` and `.gitignore` and add ./node_module and ./.env in it
+15. in `.env` add:
+
+    - `PGUSER = postgres`
+    - `PGDATABASE = database name `
+    - `PGPASSWORD = steaua1994` password set
+
+    - `{PGPORT = 5432} = process.env` -> 5432 is the default port
+
+16. Create folders: `utils/db/connect.js`
+    - import package:
+      - `import pg from "pg"`
+    - get pool from pg package:
+      - `const {Pool} = pg`
+    - Initialize pool class and asign variable:
+      - `const pool = new Pool()`
+    - `export default pool`
+17. In server.js:
+
+    - `import pool from "../utils/db/connect";`
+    - `const result = await pool.query("SELECT NOW() as time;"`
+      - In js 17 we can write `await` on the top level
+    -
+
+18. In db folder create:
+
+- `tables.sql`
+- `create-tables.js`:
+  import pool from ".connect.js"
+  fs from "fs/promises"
+  import {fileURLToPath} from "url"
+  import {join,dirname} from "path"
+- find the path to the tables.sql:
+  const dirnameOfSQLFilePath = fileURLToPath(import.meta.url)
+  const sqlFilePath = dirname(join(dirnameOfSQLFilePath, "tables.sql"))
+  make a function to create tables:
+  const createTables = async()=>{
+  try{
+  const sqlQueryAsString = await fs. readFile(sqlFilePath, "utf-8")
+
+        await pool.query(sqlQueryAsString)
+
+        console.log("Success")
+        await pool.end() to end the process
+
+      }catch(error){
+          console.log("something went wrong", error)
+        }
+      }
+
+  createTables()
+
+18. in package.js:
+
+- in scripts:
+  - `"create-tables": "node -r dotenv/config .src/utils/db/create-tables.js"`
+
+19. in tables.sql:
+
+- CREATE TABLE IF NOT EXISTS
+- product will be the table name
+  - product(
+    - `product_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,`
+    - `name VARCHAR(100) NOT NULL,`
+    - `description VARCHAR(400) DEFAULT('SOME LINK')`,
+    - `brand VARCHAR(30) NOT NULL`, `
+    - `image_url NOT NULL `
+    - `price NOT NULL `
+    - `category NOT NULL`
+    - `crated_at TIMESTAMPTZ DEFAULT NOW(),`
+    - `updated_at TIMESTAMPTZ DEFAULT NOW(),`
+      )
