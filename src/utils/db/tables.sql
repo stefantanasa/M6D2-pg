@@ -1,15 +1,14 @@
-CREATE TABLE IF NOT EXISTS
-    product(
+CREATE TABLE IF NOT EXISTS product(
     product_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     product_name VARCHAR(100) NOT NULL,
-    product_description VARCHAR(400) DEFAULT('https://picsum.photos/id/237/200/300'),
+    product_description VARCHAR(400)  ,
     product_brand VARCHAR(30) NOT NULL, 
-    image_url NOT NULL 
-    price NOT NULL
-    category NOT NULL
+    image_url TEXT NOT NULL DEFAULT 'https://picsum.photos/id/237/200/300',
+    price TEXT NOT NULL,
+    category TEXT NOT NULL,
     crated_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW(),
-    )
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+    );
     -- review(
     --     review_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY
     --     review_comment VARCHAR(250)

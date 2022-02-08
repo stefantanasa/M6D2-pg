@@ -1,8 +1,19 @@
 import express from "express";
-import pool from "../utils/db/connect";
-
+import authorsRoutes from "./services/authors.js";
+import blogsRoutes from "./services/blogs.js";
 const server = express();
+
 const { PORT = 5001 } = process.env;
+
+server.use(express.json());
+
+server.use("/authors", authorsRoutes);
+server.use("/blogs", blogsRoutes);
+
 server.listen(PORT, () => {
-  console.log("The server is ");
+  console.log(`Server is listening on port ${PORT}`);
+});
+
+server.on("error", (error) => {
+  console.log(`Server is stopped : ${error}`);
 });
