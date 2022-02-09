@@ -1,4 +1,9 @@
-CREATE TABLE IF NOT EXISTS product(
+-- DROP TABLE IF EXISTS product;
+-- DROP TABLE IF EXISTS review;
+
+
+CREATE TABLE IF NOT EXISTS
+ products(
     product_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     product_name VARCHAR(100) NOT NULL,
     product_description VARCHAR(400)  ,
@@ -9,10 +14,11 @@ CREATE TABLE IF NOT EXISTS product(
     crated_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
     );
-    -- review(
-    --     review_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY
-    --     review_comment VARCHAR(250)
-    --     rate: INTEGER NOT NULL
-    --     product_id: 5d318e1a8541744830bef139, // NOT NUL
-    --     createdAt: 2019-08-01T12:46:45.895Z // SERVER GENERATED
-    -- )
+
+CREATE TABLE IF NOT EXISTS
+reviews(
+    review_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    review_comment VARCHAR(250),
+    product_rate INTEGER NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+    );

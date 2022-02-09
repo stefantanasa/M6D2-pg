@@ -80,7 +80,7 @@ To restart the server every time we save we add another package named nodemon.
 
 19. in tables.sql:
 
-- CREATE TABLE IF NOT EXISTS
+- `CREATE TABLE IF NOT EXISTS`
 - product will be the table name
   - product(
     - `product_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,`
@@ -92,4 +92,27 @@ To restart the server every time we save we add another package named nodemon.
     - `category NOT NULL`
     - `crated_at TIMESTAMPTZ DEFAULT NOW(),`
     - `updated_at TIMESTAMPTZ DEFAULT NOW(),`
-      )
+      ),
+- to add a new table just write again the same query
+
+20. Run the script whenever I start
+
+- Add in the scripts:
+
+  - `"prestart": "npm run create-tables"`
+  - ` "start": "node ./src/server.js"`
+
+- To delete tables use:
+
+  - `DROP TABLE IF EXISTS name of the table`
+
+- To update a table:
+
+  - Use `ALTER` SEARCH FOR "ALTER TABLE postgresql
+
+- Add a relational key (FOREIGN KEY)
+  - product_id INTEGER FOREIGN KEY REFERENCES products(product_id) ON UPDATE CASCADE
+  - ON UPDATE CASCADE is optional if you want to delete the table if this field is removed
+  - product_id NOT NULL REFERENCES products(product_id) ON DELETE CASCADE,
+  - There is another way:
+    - define the key as null and at the end add the foreign key, google it.
